@@ -1,0 +1,1 @@
+TypeScript library for accessing the [The Blue Alliance](https://www.thebluealliance.com/) API
