@@ -1,0 +1,322 @@
+{
+    "getStatus": {
+        "type": "types.API_Status",
+        "path": "/status"
+    },
+    "getDistrictDCMPHistory": {
+        "type": "types.History[]",
+        "path": "/district/{district_abbreviation}/dcmp_history"
+    },
+    "getDistrictHistory": {
+        "type": "types.District[]",
+        "path": "/district/{district_abbreviation}/history"
+    },
+    "getDistrictInsights": {
+        "type": "types.District_Insight",
+        "path": "/district/{district_abbreviation}/insights"
+    },
+    "getDisctrictAdvancement": {
+        "type": "Record<string, types.District_Advancement>",
+        "path": "/district/{district_key}/advancement"
+    },
+    "getDistrictAwards": {
+        "type": "types.Award",
+        "path": "/district/{district_key}/awards"
+    },
+    "getDistrictEvents": {
+        "type": "types.Event[]",
+        "path": "/district/{district_key}/events"
+    },
+    "getDistrictEventKeys": {
+        "type": "string[]",
+        "path": "/district/{district_key}/events/keys"
+    },
+    "getDistrictSimpleEvents": {
+        "type": "types.Event_Simple[]",
+        "path": "/district/{district_key}/events/simple"
+    },
+    "getDistrictRankings": {
+        "type": "types.District_Ranking[]",
+        "path": "/district/{district_key}/rankings"
+    },
+    "getDistrictTeams": {
+        "type": "types.Team[]",
+        "path": "/district/{district_key}/teams"
+    },
+    "getDistrictTeamKeys": {
+        "type": "string[]",
+        "path": "/district/{district_key}/teams/keys"
+    },
+    "getDistrictTeamsSimple": {
+        "type": "types.Team_Simple[]",
+        "path": "/district/{district_key}/teams/simple"
+    },
+    "getDistrictsByYear": {
+        "type": "types.District[]",
+        "path": "/districts/{year}"
+    },
+    "getTeamDistricts": {
+        "type": "types.District[]",
+        "path": "/team/{team_key}/districts"
+    },
+    "getEvent": {
+        "type": "types.Event",
+        "path": "/event/{event_key}"
+    },
+    "getEventAdvancementPoints": {
+        "type": "types.Event_District_Points",
+        "path": "/event/{event_key}/advancement_points"
+    },
+    "getEventAlliances": {
+        "type": "types.Elimination_Alliance[]",
+        "path": "/event/{event_key}/alliances"
+    },
+    "getEventAwards": {
+        "type": "types.Award[]",
+        "path": "/event/{event_key}/awards"
+    },
+    "getEventCOPRs": {
+        "type": "Record<string, types.Event_COPRs>",
+        "path": "/event/{event_key}/coprs"
+    },
+    "getEventDistrictPoints": {
+        "type": "types.Event_District_Points",
+        "path": "/event/{event_key}/district_points"
+    },
+    "getEventInsights": {
+        "type": "types.Event_Insights",
+        "path": "/event/{event_key}/insights"
+    },
+    "getEventMatches": {
+        "type": "types.Match[]",
+        "path": "/event/{event_key}/matches"
+    },
+    "getEventMatchKeys": {
+        "type": "string[]",
+        "path": "/event/{event_key}/matches/keys"
+    },
+    "getEventMatchesSimple": {
+        "type": "types.Match_Simple[]",
+        "path": "/event/{event_key}/matches/simple"
+    },
+    "getEventMatchTimeseries": {
+        "type": "string[]",
+        "path": "/event/{event_key}/matches/timeseries"
+    },
+    "getEventOPRs": {
+        "type": "types.Event_OPRs",
+        "path": "/event/{event_key}/oprs"
+    },
+    "getEventPredictions": {
+        "type": "types.Event_Predictions",
+        "path": "/event/{event_key}/predictions"
+    },
+    "getEventRankings": {
+        "type": "types.Event_Ranking",
+        "path": "/event/{event_key}/rankings"
+    },
+    "getEventRegionChampPoints": {
+        "type": "types.Event_District_Points",
+        "path": "/event/{event_key}/regional_champs_pool_points"
+    },
+    "getEventSimple": {
+        "type": "types.Event_Simple",
+        "path": "/event/{event_key}/simple"
+    },
+    "getEventTeamMedia": {
+        "type": "types.Media[]",
+        "path": "/event/{event_key}/team_media"
+    },
+    "getEventTeams": {
+        "type": "types.Team[]",
+        "path": "/event/{event_key}/teams"
+    },
+    "getEventTeamKeys": {
+        "type": "string[]",
+        "path": "/event/{event_key}/teams/keys"
+    },
+    "getEventTeamsSimple": {
+        "type": "types.Team_Simple",
+        "path": "/event/{event_key}/teams/simple"
+    },
+    "getEventTeamStatuses": {
+        "type": "Record<string, types.Team_Event_Status>",
+        "path": "/event/{event_key}/teams/statuses"
+    },
+    "getEventsByYear": {
+        "type": "types.Event[]",
+        "path": "/events/{year}"
+    },
+    "getEventKeysByYear": {
+        "type": "string[]",
+        "path": "/events/{year}/keys"
+    },
+    "getEventsByYearSimple": {
+        "type": "types.Event_Simple[]",
+        "path": "/events/{year}/simple"
+    },
+    "getTeamEventAwards": {
+        "type": "types.Award[]",
+        "path": "/team/{team_key}/event/{event_key}/awards"
+    },
+    "getTeamEventMatches": {
+        "type": "types.Match[]",
+        "path": "/team/{team_key}/event/{event_key}/matches"
+    },
+    "getTeamEventMatchKeys": {
+        "type": "string[]",
+        "path": "/team/{team_key}/event/{event_key}/matches/keys"
+    },
+    "getTeamEventMatchesSimple": {
+        "type": "types.Match_Simple[]",
+        "path": "/team/{team_key}/event/{event_key}/matches/simple"
+    },
+    "getTeamEventStatus": {
+        "type": "types.Team_Event_Status",
+        "path": "/team/{team_key}/event/{event_key}/status"
+    },
+    "getTeamEvents": {
+        "type": "Event[]",
+        "path": "/team/{team_key}/events"
+    },
+    "getTeamEventKeys": {
+        "type": "string[]",
+        "path": "/team/{team_key}/events/keys"
+    },
+    "getTeamEventsSimple": {
+        "type": "types.Event_Simple[]",
+        "path": "/team/{team_key}/events/simple"
+    },
+    "getTeamEventsByYear": {
+        "type": "Event[]",
+        "path": "/team/{team_key}/events/{year}"
+    },
+    "getTeamEventKeysByYear": {
+        "type": "string[]",
+        "path": "/team/{team_key}/events/{year}/keys"
+    },
+    "getTeamEventsByYearSimple": {
+        "type": "types.Event_Simple[]",
+        "path": "/team/{team_key}/events/{year}/simple"
+    },
+    "getTeamEventStatusByYear": {
+        "type": "types.Team_Event_Status[]",
+        "path": "/team/{team_key}/events/{year}/statuses"
+    },
+    "getInsightsLeaderboardByYear": {
+        "type": "types.LeaderboardInsight[]",
+        "path": "/insights/leaderboards/{year}"
+    },
+    "getInsightsNotablesByYear": {
+        "type": "types.NotablesInsight[]",
+        "path": "/insights/notables/{year}"
+    },
+    "getMatch": {
+        "type": "types.Match",
+        "path": "/match/{match_key}"
+    },
+    "getMatchSimple": {
+        "type": "types.Match_Simple",
+        "path": "/match/{match_key}/simple"
+    },
+    "getMatchTimeseries": {
+        "type": "any[]",
+        "path": "/match/{match_key}/timeseries"
+    },
+    "getMatchZebraMotionworks": {
+        "type": "types.Zebra",
+        "path": "/match/{match_key}/zebra_motionworks"
+    },
+    "getTeamMatchesByYear": {
+        "type": "types.Match[]",
+        "path": "/team/{team_key}/matches/{year}"
+    },
+    "getTeamMatcheKeysByYear": {
+        "type": "string[]",
+        "path": "/team/{team_key}/matches/{year}/keys"
+    },
+    "getTeamMatchesByYearSimple": {
+        "type": "types.Match_Simple[]",
+        "path": "/team/{team_key}/matches/{year}/simple"
+    },
+    "getRegionalAdvancementByYear": {
+        "type": "Record<string, types.Regional_Advancement>",
+        "path": "/regional_advancement/{year}"
+    },
+    "getRegionalAdvancementRankingsByYear": {
+        "type": "types.Regional_Ranking[]",
+        "path": "/regional_advancement/{year}/rankings"
+    },
+    "getTeam": {
+        "type": "types.Team",
+        "path": "/team/{team_key}"
+    },
+    "getTeamAwards": {
+        "type": "types.Award[]",
+        "path": "/team/{team_key}/awards"
+    },
+    "getTeamAwardsByYear": {
+        "type": "types.Award[]",
+        "path": "/team/{team_key}/awards/{year}"
+    },
+    "getTeamHistory": {
+        "type": "types.History",
+        "path": "/team/{team_key}/history"
+    },
+    "getTeamMediaTag": {
+        "type": "types.Media[]",
+        "path": "/team/{team_key}/media/tag/{media_tag}"
+    },
+    "getTeamMediaTagByYear": {
+        "type": "types.Media[]",
+        "path": "/team/{team_key}/media/tag/{media_tag}/{year}"
+    },
+    "getTeamMediaByYear": {
+        "type": "types.Media[]",
+        "path": "/team/{team_key}/media/{year}"
+    },
+    "getTeamRobots": {
+        "type": "types.Team_Robot[]",
+        "path": "/team/{team_key}/robots"
+    },
+    "getTeamSimple": {
+        "type": "types.Team_Simple",
+        "path": "/team/{team_key}/simple"
+    },
+    "getTeamSocialMedia": {
+        "type": "types.Media[]",
+        "path": "/team/{team_key}/social_media"
+    },
+    "getTeamActiveYears": {
+        "type": "number[]",
+        "path": "/team/{team_key}/years_participated"
+    },
+    "getTeamsPage": {
+        "type": "types.Team[]",
+        "path": "/teams/{page_num}"
+    },
+    "getTeamKeysPage": {
+        "type": "string[]",
+        "path": "/teams/{page_num}/keys"
+    },
+    "getTeamsPageSimple": {
+        "type": "types.Team_Simple[]",
+        "path": "/teams/{page_num}/simple"
+    },
+    "getTeamsPageByYear": {
+        "type": "types.Team[]",
+        "path": "/teams/{year}/{page_num}"
+    },
+    "getTeamKeysPageByYear": {
+        "type": "string[]",
+        "path": "/teams/{year}/{page_num}/keys"
+    },
+    "getTeamsPageSimpleByYear": {
+        "type": "types.Team_Simple[]",
+        "path": "/teams/{year}/{page_num}/simple"
+    },
+    "getSearchIndex": {
+        "type": "types.SearchIndex",
+        "path": "/search_index"
+    }
+}
