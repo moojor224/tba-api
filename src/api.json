@@ -176,7 +176,7 @@
         "path": "/team/{team_key}/event/{event_key}/status"
     },
     "getTeamEvents": {
-        "type": "Event[]",
+        "type": "types.Event[]",
         "path": "/team/{team_key}/events"
     },
     "getTeamEventKeys": {
@@ -188,7 +188,7 @@
         "path": "/team/{team_key}/events/simple"
     },
     "getTeamEventsByYear": {
-        "type": "Event[]",
+        "type": "types.Event[]",
         "path": "/team/{team_key}/events/{year}"
     },
     "getTeamEventKeysByYear": {
