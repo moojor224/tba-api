@@ -215,7 +215,7 @@ export class TBAAPI extends EventTarget {
     getTeamEventStatus(team_key: string, event_key: string, abort?: AbortController): APIResponse<types.Team_Event_Status> {
         return _fetch(BASE_URL + `/team/${team_key}/event/${event_key}/status`, this.API_KEY, abort);
     }
-    getTeamEvents(team_key: string, abort?: AbortController): APIResponse<Event[]> {
+    getTeamEvents(team_key: string, abort?: AbortController): APIResponse<types.Event[]> {
         return _fetch(BASE_URL + `/team/${team_key}/events`, this.API_KEY, abort);
     }
     getTeamEventKeys(team_key: string, abort?: AbortController): APIResponse<string[]> {
@@ -224,7 +224,7 @@ export class TBAAPI extends EventTarget {
     getTeamEventsSimple(team_key: string, abort?: AbortController): APIResponse<types.Event_Simple[]> {
         return _fetch(BASE_URL + `/team/${team_key}/events/simple`, this.API_KEY, abort);
     }
-    getTeamEventsByYear(team_key: string, year: string, abort?: AbortController): APIResponse<Event[]> {
+    getTeamEventsByYear(team_key: string, year: string, abort?: AbortController): APIResponse<types.Event[]> {
         return _fetch(BASE_URL + `/team/${team_key}/events/${year}`, this.API_KEY, abort);
     }
     getTeamEventKeysByYear(team_key: string, year: string, abort?: AbortController): APIResponse<string[]> {
