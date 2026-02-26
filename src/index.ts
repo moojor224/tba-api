@@ -1,4 +1,5 @@
 import * as types from "./types.js"; // import all types
+export type * from "./types.d.ts";
 
 type Action<T> = () => Promise<T>;
 type APIResponse<T> = Promise<T | null>;
