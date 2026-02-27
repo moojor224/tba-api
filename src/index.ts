@@ -1,13 +1,13 @@
-import { RateLimiter } from "@moojor224/promise-limiter";
+import { ConcurrencyLimiter } from "@moojor224/promise-limiter";
 import * as types from "./types.js"; // import all types
 export type * from "./types.d.ts";
 
 type APIResponse<T> = Promise<T | null>;
 
-const rateLimit = new RateLimiter(5);
+const rateLimit = new ConcurrencyLimiter(5);
 export function setRateLimit(rate: number) {
     if (rate > 0) {
-        rateLimit.setRate(rate);
+        rateLimit.setLimit(rate);
     }
 }
 
