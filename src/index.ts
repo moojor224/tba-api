@@ -1,38 +1,13 @@
+import { RateLimiter } from "@moojor224/promise-limiter";
 import * as types from "./types.js"; // import all types
 export type * from "./types.d.ts";
 
-type Action<T> = () => Promise<T>;
 type APIResponse<T> = Promise<T | null>;
-
-class RateLimiter {
-    rate: number;
-    private interval: number;
-    private active = 0;
-    constructor(rate: number, interval: number = 10) {
-        this.rate = rate;
-        this.interval = interval;
-    }
-    run<T>(action: Action<T>): Promise<T> {
-        return new Promise<T>((resolve) => {
-            const run = async () => {
-                if (this.active < this.rate) {
-                    this.active++;
-                    const result = await action();
-                    this.active--;
-                    resolve(result);
-                } else {
-                    setTimeout(run, this.interval);
-                }
-            };
-            run();
-        });
-    }
-}
 
 const rateLimit = new RateLimiter(5);
 export function setRateLimit(rate: number) {
     if (rate > 0) {
-        rateLimit.rate = rate;
+        rateLimit.setRate(rate);
     }
 }
 

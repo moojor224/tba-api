@@ -21,5 +21,8 @@
     "scripts": {
         "prepack": "tsup"
     },
-    "packageManager": "pnpm@10.12.1"
+    "packageManager": "pnpm@10.12.1",
+    "dependencies": {
+        "@moojor224/promise-limiter": "^1.0.0"
+    }
 }
