@@ -1,5 +1,5 @@
 // lmao this file is absolutely cursed, imo. just run it with `node src/gen.js` and copy the output class to index.ts
-// last api update: https://github.com/the-blue-alliance/the-blue-alliance/blob/d0c8e4fddd19175422630c865cd6baec93a6f8ff/src/backend/web/static/swagger/api_v3.json
+// last api update: https://github.com/the-blue-alliance/the-blue-alliance/blob/8e144c01f44fd880c92a06425bbb80f2cf56e4c2/src/backend/web/static/swagger/api_v3.json
 // raw file: https://github.com/the-blue-alliance/the-blue-alliance/blob/main/src/backend/web/static/swagger/api_v3.json
 
 // run this on https://www.thebluealliance.com/apidocs/v3

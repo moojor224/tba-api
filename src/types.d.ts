@@ -19,14 +19,15 @@ export type API_Status_App_Version = {
     /** Internal use - Latest application version available. */
     latest_app_version: number;
 };
+/** The color of an alliance, or an empty string when there is no winning alliance (e.g. tie or no result). See https://github.com/the-blue-alliance/the-blue-alliance/blob/main/src/backend/common/consts/alliance_color.py for red/blue definitions. */
+export type AllianceColor = "red" | "blue" | "";
 export type AutoChargeStationRobot_2023 = "Docked" | "None";
 export type AutoLineRobot_2024 = "No" | "Yes";
 export type AutoRobot_2018 = "None" | "AutoRun";
 export type Award = {
     /** The name of the award as provided by FIRST. May vary for the same award type. */
     name: string;
-    /** Type of award given. See https://github.com/the-blue-alliance/the-blue-alliance/blob/main/src/backend/common/consts/award_type.py#L8 */
-    award_type: number;
+    award_type: AwardType;
     /** The event_key of the event the award was won at. */
     event_key: string;
     /** A list of recipients of the award at the event. May have either a team_key or an awardee, both, or neither (in the case the award wasn't awarded at the event). */
@@ -45,6 +46,12 @@ export type Bay_2019 = "None" | "Panel" | "PanelAndCargo";
 export type BridgeState_2023 = "Level" | "NotLevel";
 /** The competition level the match was played at. */
 export type Comp_Level = "qm" | "ef" | "qf" | "sf" | "f";
+/** Type of award given. See https://github.com/the-blue-alliance/the-blue-alliance/blob/main/src/backend/common/consts/award_type.py for full definitions. */
+export type AwardType = number;
+/** Event Type. See https://github.com/the-blue-alliance/the-blue-alliance/blob/main/src/backend/common/consts/event_type.py for definitions. */
+export type EventType = number;
+/** Playoff bracket format. See https://github.com/the-blue-alliance/the-blue-alliance/blob/main/src/backend/common/consts/playoff_type.py for definitions. */
+export type PlayoffType = number;
 export type District = {
     /** The short identifier for the district. */
     abbreviation: string;
@@ -54,6 +61,13 @@ export type District = {
     key: string;
     /** Year this district participated. */
     year: number;
+    /** The number of teams advancing to DCMP and CMP from this district, as specified in the FIRST manual. */
+    official_advancement_counts: {
+        /** Number of teams advancing to the District Championship. */
+        dcmp: number;
+        /** Number of teams advancing to the Championship. */
+        cmp: number;
+    };
 };
 export type DistrictInsightRegionData = {
     /** Map of year to number of active teams */
@@ -154,7 +168,7 @@ export type Elimination_Alliance = {
         /** Average match score during playoffs. Year specific. May be null. */
         playoff_average?: number | null;
         /** Playoff type, may be null. */
-        playoff_type: number | null;
+        playoff_type: PlayoffType | null;
         /** Match level, qm/ef/qf/sf/f. */
         level: Comp_Level;
         /** W-L-T record for the alliance, may be null. */
@@ -206,8 +220,7 @@ export type Event = {
     name: string;
     /** Event short code, as provided by FIRST. */
     event_code: string;
-    /** Event Type, as defined here: https://github.com/the-blue-alliance/the-blue-alliance/blob/main/src/backend/common/consts/event_type.py#L8 */
-    event_type: number;
+    event_type: EventType;
     district: District | null;
     /** City, town, village, etc. the event is located in. */
     city: string | null;
@@ -254,8 +267,8 @@ export type Event = {
     division_keys: string[];
     /** The TBA Event key that represents the event's parent. Used to link back to the event from a division event. It is also the inverse relation of `divison_keys`. */
     parent_event_key: string | null;
-    /** Playoff Type, as defined under `PlayoffType`: https://github.com/the-blue-alliance/the-blue-alliance/blob/main/src/backend/common/consts/playoff_type.py#L37, or null. */
-    playoff_type: number | null;
+    /** Playoff Type, or null. */
+    playoff_type: PlayoffType | null;
     /** String representation of the `playoff_type`, or null. */
     playoff_type_string: string | null;
     /** Map of temporary "off-season demo" team numbers to pre-rookie and B teams. Both keys and values are team keys in the format 'frc####'. Key is the old team key ('frc' + numeric only), value is the new team key ('frc' + numeric + may include a letter suffix). */
@@ -284,7 +297,7 @@ export type Event_District_Points = {
     tiebreakers?: Record<
         string,
         {
-            highest_qual_scores?: number[];
+            highest_match_scores?: number[];
             qual_wins?: number;
         }
     >;
@@ -545,8 +558,7 @@ export type Event_Simple = {
     name: string;
     /** Event short code, as provided by FIRST. */
     event_code: string;
-    /** Event Type, as defined here: https://github.com/the-blue-alliance/the-blue-alliance/blob/main/src/backend/common/consts/event_type.py#L8 */
-    event_type: number;
+    event_type: EventType;
     district: District | null;
     /** City, town, village, etc. the event is located in. */
     city: string | null;
@@ -601,7 +613,7 @@ export type Match = {
         blue: Match_alliance;
     };
     /** The color (red/blue) of the winning alliance. Will contain an empty string in the event of no winner, or a tie. */
-    winning_alliance: "red" | "blue" | "";
+    winning_alliance: AllianceColor;
     /** Event key of the event the match was played at. */
     event_key: string;
     /** UNIX timestamp (seconds since 1-Jan-1970 00:00:00) of the scheduled match time, as taken from the published schedule. */
@@ -624,7 +636,8 @@ export type Match = {
         | Match_Score_Breakdown_2023
         | Match_Score_Breakdown_2024
         | Match_Score_Breakdown_2025
-        | Match_Score_Breakdown_2026;
+        | Match_Score_Breakdown_2026
+        | null;
     /** Array of video objects associated with this match. */
     videos: {
         /** Can be one of 'youtube' or 'tba' */
@@ -1170,7 +1183,7 @@ export type Match_Simple = {
         blue: Match_alliance;
     };
     /** The color (red/blue) of the winning alliance. Will contain an empty string in the event of no winner, or a tie. */
-    winning_alliance: "red" | "blue" | "";
+    winning_alliance: AllianceColor;
     /** Event key of the event the match was played at. */
     event_key: string;
     /** UNIX timestamp (seconds since 1-Jan-1970 00:00:00) of the scheduled match time, as taken from the published schedule. */
@@ -1180,9 +1193,9 @@ export type Match_Simple = {
     /** UNIX timestamp (seconds since 1-Jan-1970 00:00:00) of actual match start time. */
     actual_time: number | null;
 };
-/** Timeseries data for the 2018 game *FIRST* POWER UP.\
- * *WARNING:* This is *not* official data, and is subject to a significant possibility of error, or missing data. Do not rely on this data for any purpose. In fact, pretend we made it up.\
- * *WARNING:* This model is currently under active development and may change at any time, including in breaking ways. */
+/** Timeseries data for the 2018 game *FIRST* POWER UP.
+ *WARNING:* This is *not* official data, and is subject to a significant possibility of error, or missing data. Do not rely on this data for any purpose. In fact, pretend we made it up.
+ *WARNING:* This model is currently under active development and may change at any time, including in breaking ways. */
 export type Match_Timeseries_2018 = {
     /** TBA event key with the format yyyy[EVENT_CODE], where yyyy is the year, and EVENT_CODE is the event code of the event. */
     event_key?: string;
@@ -1256,7 +1269,21 @@ export type Match_alliance = {
     dq_team_keys: string[];
 };
 /** The `Media` object contains a reference for most any media associated with a team or event on TBA. */
-export type Media = {
+export type Media =
+    | Media_Avatar
+    | Media_CdPhotoThread
+    | Media_CdThread
+    | Media_GrabCad
+    | Media_NoDetails
+    | Media_Onshape;
+export type Media_Avatar = Media_Base & Media_Avatar_Extras;
+export type Media_Avatar_Extras = {
+    type?: any;
+    details?: {
+        base64Image: string;
+    };
+};
+export type Media_Base = {
     /** String type of the media element. */
     type:
         | "youtube"
@@ -1277,42 +1304,6 @@ export type Media = {
         | "cd-thread";
     /** The key used to identify this media on the media site. */
     foreign_key: string;
-    /** If required, a JSON dict of additional media information. */
-    details?:
-        | any
-        | {
-              base64Image: string;
-          }
-        | {
-              author_id: number;
-              author_name: string;
-              author_url: string;
-              height: number | null;
-              html: string;
-              media_id: string;
-              provider_name: string;
-              provider_url: string;
-              thumbnail_height: number;
-              thumbnail_url: string;
-              thumbnail_width: number;
-              title: string;
-              type: string;
-              version: string;
-              width: number;
-          }
-        | {
-              model_created: string;
-              model_description: string | null;
-              model_image: string;
-              model_name: string;
-          }
-        | {
-              image_partial: string;
-          }
-        | {
-              thread_title: string;
-              image_url: string | null;
-          };
     /** True if the media is of high quality. */
     preferred?: boolean;
     /** List of teams that this media belongs to. Most likely length 1. */
@@ -1321,6 +1312,52 @@ export type Media = {
     direct_url?: string;
     /** The URL that leads to the full web page for the media, if one exists. */
     view_url?: string;
+};
+export type Media_CdPhotoThread = Media_Base & {
+    type?: any;
+    details?: {
+        image_partial: string;
+    };
+};
+export type Media_CdThread = Media_Base & {
+    type?: any;
+    details?: {
+        thread_title: string;
+        image_url: string | null;
+    };
+};
+export type Media_GrabCad = Media_Base & {
+    type?: any;
+    details?: {
+        model_created: string;
+        model_description: string | null;
+        model_image: string;
+        model_name: string;
+    };
+};
+export type Media_NoDetails = Media_Base & {
+    type?:
+        | "youtube"
+        | "imgur"
+        | "facebook-profile"
+        | "youtube-channel"
+        | "twitter-profile"
+        | "github-profile"
+        | "instagram-profile"
+        | "periscope-profile"
+        | "gitlab-profile"
+        | "instagram-image"
+        | "external-link";
+    details?: any;
+};
+export type Media_Onshape = Media_Base & {
+    type?: any;
+    details?: {
+        model_created: string;
+        model_description: string | null;
+        model_image: string;
+        model_name: string;
+    };
 };
 export type MobilityRobot_2023 = "No" | "Yes";
 export type NotablesInsight = {
@@ -1333,6 +1370,106 @@ export type NotablesInsight = {
     };
     name: string;
     year: number;
+};
+/** A typed insight object. Use `category` to discriminate between leaderboard, streak, and timeseries shapes. */
+export type InsightV2 = InsightV2_Leaderboard | InsightV2_Streak | InsightV2_Timeseries;
+export type InsightV2_Base = {
+    /** Programmatic name of the insight, e.g. `blue_banners`. */
+    name: string;
+    /** Human-readable name of the insight, e.g. `Total Blue Banners`. */
+    display_name: string;
+    /** Year the insight was measured in. Use 0 for all-time insights. */
+    year: number;
+    /** Insight category. Discriminates the shape of `data`. */
+    category: "leaderboard" | "streak" | "timeseries";
+    /** District abbreviation if the insight is district-scoped, otherwise null. */
+    district_abbreviation: string;
+};
+export type InsightV2_Leaderboard = InsightV2_Base & InsightV2_Leaderboard_Extras;
+export type InsightV2_Leaderboard_Extras = {
+    category?: any;
+    data: InsightV2LeaderboardData;
+};
+export type InsightV2_Streak = InsightV2_Base & InsightV2_Streak_Extras;
+export type InsightV2_Streak_Extras = {
+    category?: any;
+    data: InsightV2StreakData;
+};
+export type InsightV2_Timeseries = InsightV2_Base & InsightV2_Timeseries_Extras;
+export type InsightV2_Timeseries_Extras = {
+    category?: any;
+    data: InsightV2TimeseriesData;
+};
+/** Data for a leaderboard-category InsightV2. Rankings of teams, events, or matches by a numeric value. */
+export type InsightV2LeaderboardData = {
+    /** What kind of keys appear in the rankings. */
+    key_type: "team" | "event" | "match" | "team_pair" | "alliance";
+    /** Whether rankings include per-entry context. */
+    context_type: "event_list" | "none" | "match_alliance";
+    /** Ranked entries, ordered from highest to lowest value. */
+    rankings: {
+        /** Team/event/match keys sharing this rank. For team_pair, a list of two-element lists. */
+        keys: string[] | string[][];
+        /** The numeric value for this rank. */
+        value: number;
+        /** Present when context_type is event_list or match_alliance. Parallel to keys. For event_list, each entry lists event_keys. For match_alliance, each entry has match_key and alliance (team keys). */
+        contexts?: (
+            | {
+                  event_keys?: string[];
+              }
+            | {
+                  match_key: string;
+                  alliance: string[];
+              }
+        )[];
+    }[];
+};
+/** Data for a streak-category InsightV2. Records of consecutive achievement by teams. */
+export type InsightV2StreakData = {
+    entries: {
+        /** Team or entity key. */
+        key: string;
+        key_type: "team" | "event" | "match" | "team_pair";
+        /** Length of the streak. */
+        streak_length: number;
+        /** Event key or year string where the streak began. */
+        start: string;
+        /** Event key or year string where the streak ended (or is ongoing). */
+        end: string;
+        /** Whether this streak is still ongoing. */
+        is_active: boolean;
+    }[];
+};
+/** Data for a timeseries-category InsightV2. One or more named series of (x, y) data points over time. */
+export type InsightV2TimeseriesData = {
+    /** What the x-axis represents. */
+    x_type: "week" | "year" | "event";
+    /** Human-readable label for the x-axis. */
+    x_label: string;
+    /** Human-readable label for the y-axis. */
+    y_label: string;
+    /** Whether data points include additional context. */
+    point_context_type: "none" | "match_record";
+    series: {
+        /** Human-readable series name. */
+        label: string;
+        points: {
+            /** X-axis value (week string, year integer, or event key). */
+            x: string | number | number;
+            /** Y-axis value. */
+            y: number;
+            /** Present when point_context_type is match_record. */
+            context?: {
+                match_key?: string;
+                /** Team keys on the record-setting alliance. */
+                alliance?: string[];
+                /** Unix timestamp when the record was set. */
+                post_result_time?: number;
+                /** Whether this is still the current world record. */
+                is_current?: boolean;
+            };
+        }[];
+    }[];
 };
 export type Position_2016 =
     | ""
@@ -1467,6 +1604,8 @@ export type Team_Event_Status = {
     next_match_key?: string | null;
     /** TBA match key for the last match the team played in at this event, or null. */
     last_match_key?: string | null;
+    /** The pit location for the team at this event, or null if not available. */
+    pit_location?: string | null;
 };
 export type Team_Event_Status_alliance = {
     /** Alliance name, may be null. */
@@ -1560,6 +1699,8 @@ export type WLT_Record = {
     /** Number of ties. */
     ties: number;
 };
+/** Online status of a webcast. See https://github.com/the-blue-alliance/the-blue-alliance/blob/main/src/backend/common/consts/webcast_status.py for full definitions. */
+export type WebcastStatus = "unknown" | "online" | "offline";
 export type Webcast = {
     /** Type of webcast, typically descriptive of the streaming provider. */
     type:
@@ -1582,7 +1723,7 @@ export type Webcast = {
     /** File identification as may be required for some types. May be null. */
     file?: string | null;
     /** The online status of the webcast, fetched from the streaming provider's API. May be null if not available. */
-    status?: "unknown" | "online" | "offline" | null;
+    status?: WebcastStatus | null;
     /** The title of the stream from the streaming provider. May be null. */
     stream_title?: string | null;
     /** The current viewer count from the streaming provider. May be null. */
